@@ -2014,6 +2014,10 @@ retry:
 	} else if (arg->flags & DRM_MODE_ATOMIC_NONBLOCK) {
 		ret = drm_atomic_nonblocking_commit(state);
 	} else {
+		cpu_input_boost_kick_max(CONFIG_WAKE_BOOST_DURATION_MS);
+		devfreq_boost_kick_max(DEVFREQ_MSM_CPUBW,
+				CONFIG_DEVFREQ_WAKE_BOOST_DURATION_MS);
+
 		ret = drm_atomic_commit(state);
 	}
 
